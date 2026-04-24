@@ -1,5 +1,7 @@
-package com.krekno.bookshopbackend.security;
+package com.krekno.bookshopbackend.config;
 
+import com.krekno.bookshopbackend.enums.Role;
+import com.krekno.bookshopbackend.security.AuthTokenFilter;
 import com.krekno.bookshopbackend.service.JwtUtils;
 import com.krekno.bookshopbackend.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -51,8 +53,11 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
                         auth.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                                .requestMatchers("/api/order/admin/**").hasAuthority(Role.ROLE_ADMIN.name())
                                 .requestMatchers("/api/auth/update").authenticated()
                                 .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/cart/**").authenticated()
+                                .requestMatchers("/api/order/**").authenticated()
                                 .anyRequest().authenticated()
                 );
 
@@ -64,7 +69,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://springboot-e-commerce-project-sab4.onrender.com")); // React frontend URL
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:8080"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);

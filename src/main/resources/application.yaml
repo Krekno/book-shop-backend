@@ -1,1 +1,18 @@
-spring.application.name=book-shop-backend
+spring:
+  application:
+    name: book-shop-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/my_database
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+app:
+  jwt:
+    secret: uGm6OiY35ofV5j5iTlRwEXj7rX5sz7f9xwK3Rr3Dc/4=
+    jwtExpirationMs: 900000 # 15 minutes
+    jwtRefreshExpirationMs: 604800000 # 7 days
+    jwtCookieName: jwt-access
+    jwtRefreshCookieName: jwt-refresh

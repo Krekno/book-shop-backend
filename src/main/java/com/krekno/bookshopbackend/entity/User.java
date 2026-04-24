@@ -1,4 +1,28 @@
 package com.krekno.bookshopbackend.entity;
 
-public class user {
+import com.krekno.bookshopbackend.enums.Role;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Data
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cart cart;
+
+    private Role role;
 }

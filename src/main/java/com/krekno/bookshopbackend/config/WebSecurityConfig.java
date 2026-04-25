@@ -54,6 +54,10 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                                 .requestMatchers("/api/order/admin/**").hasAuthority(Role.ROLE_ADMIN.name())
+                                .requestMatchers("/api/books/delete/**").hasAuthority(Role.ROLE_ADMIN.name())
+                                .requestMatchers("/api/books/update/**").hasAuthority(Role.ROLE_ADMIN.name())
+                                .requestMatchers("/api/books/all/admin").hasAuthority(Role.ROLE_ADMIN.name())
+                                .requestMatchers("/api/books/**").permitAll()
                                 .requestMatchers("/api/auth/update").authenticated()
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/cart/**").authenticated()

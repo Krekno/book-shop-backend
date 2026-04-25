@@ -82,8 +82,8 @@ public class BookController {
                         .body("Book not found!"));
     }
 
-    @PutMapping
-    public ResponseEntity<?> deleteBook(@RequestBody Long id) {
+    @PutMapping("/delete{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable Long id) {
 
         bookRepository.deleteById(id);
         return ResponseEntity.ok("Book deleted successfully!");

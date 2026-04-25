@@ -47,7 +47,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -56,6 +56,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/order/admin/**").hasAuthority(Role.ROLE_ADMIN.name())
                                 .requestMatchers("/api/books/delete/**").hasAuthority(Role.ROLE_ADMIN.name())
                                 .requestMatchers("/api/books/update/**").hasAuthority(Role.ROLE_ADMIN.name())
+                                .requestMatchers("/api/books/saveBook").hasAuthority(Role.ROLE_ADMIN.name())
                                 .requestMatchers("/api/books/all/admin").hasAuthority(Role.ROLE_ADMIN.name())
                                 .requestMatchers("/api/books/**").permitAll()
                                 .requestMatchers("/api/auth/update").authenticated()

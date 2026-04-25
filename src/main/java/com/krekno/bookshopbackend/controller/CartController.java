@@ -46,10 +46,10 @@ public class CartController {
         return ResponseEntity.ok(cart.getItems());
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add{id}")
     public ResponseEntity<?> addToCart(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody Long bookId) {
+            @PathVariable Long bookId) {
 
         User user = userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -89,10 +89,10 @@ public class CartController {
         return ResponseEntity.ok("Added to cart");
     }
 
-    @PutMapping("/remove")
+    @PutMapping("/remove{bookId}")
     public ResponseEntity<?> deleteCartItem(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @RequestBody Long bookId) {
+            @PathVariable Long bookId) {
 
         User user = userRepository.findById(userDetails.getId())
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));

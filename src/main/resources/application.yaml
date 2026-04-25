@@ -2,12 +2,12 @@ spring:
   application:
     name: book-shop-backend
   datasource:
-    url: jdbc:postgresql://localhost:5432/my_database
+    url: jdbc:postgresql://localhost:5432/book-shop
     username: postgres
     password: postgres
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 app:
   jwt:

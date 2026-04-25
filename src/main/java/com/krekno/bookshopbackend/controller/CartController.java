@@ -46,7 +46,7 @@ public class CartController {
         return ResponseEntity.ok(cart.getItems());
     }
 
-    @PostMapping("/add{id}")
+    @PostMapping("/add{bookId}")
     public ResponseEntity<?> addToCart(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long bookId) {

@@ -21,8 +21,5 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Cart cart;
-
     private Role role;
 }

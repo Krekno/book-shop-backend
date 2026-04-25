@@ -46,7 +46,7 @@ public class CartController {
         return ResponseEntity.ok(cart.getItems());
     }
 
-    @PostMapping("/add{bookId}")
+    @PostMapping("/add/{bookId}")
     public ResponseEntity<?> addToCart(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long bookId) {
@@ -89,7 +89,7 @@ public class CartController {
         return ResponseEntity.ok("Added to cart");
     }
 
-    @PutMapping("/remove{bookId}")
+    @PutMapping("/remove/{bookId}")
     public ResponseEntity<?> deleteCartItem(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @PathVariable Long bookId) {

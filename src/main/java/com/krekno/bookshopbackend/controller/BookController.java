@@ -52,7 +52,7 @@ public class BookController {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
+    public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody BookRequestDto updatedBook) {
 
         return bookRepository.findById(id)
                 .map(book -> {
@@ -101,7 +101,7 @@ public class BookController {
                         .body("Book not found!"));
     }
 
-    @PutMapping("/delete{id}")
+    @PutMapping("/delete/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable Long id) {
 
         bookRepository.deleteById(id);

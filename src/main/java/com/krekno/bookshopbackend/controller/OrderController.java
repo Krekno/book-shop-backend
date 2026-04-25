@@ -91,7 +91,7 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-    @PatchMapping("/admin/approve{id}")
+    @PatchMapping("/admin/approve/{id}")
     public ResponseEntity<?> approveOrder(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
@@ -102,7 +102,7 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/admin/cancel{id}")
+    @PatchMapping("/admin/cancel/{id}")
     public ResponseEntity<?> cancelOrder(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)

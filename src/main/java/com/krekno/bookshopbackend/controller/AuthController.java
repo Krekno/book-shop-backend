@@ -21,6 +21,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,7 +58,9 @@ public class AuthController {
 
     @PatchMapping("/update")
     ResponseEntity<?> updateUser(@RequestBody SignupRequest signupRequest, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-         User user = userRepository.findById(userDetails.getId()).get();
+
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
 
          if(signupRequest.getUsername() != null && !signupRequest.getUsername().isEmpty())
              user.setUsername(signupRequest.getUsername());
@@ -127,7 +130,8 @@ public class AuthController {
 
     @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
-        Object principle = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principle = Objects.requireNonNull(SecurityContextHolder.getContext().getAuthentication()).getPrincipal();
+        assert principle != null;
         if (!   Objects.equals(principle.toString(), "anonymousUser")) {
             Long userId = ((UserDetailsImpl) principle).getId();
             refreshTokenService.deleteByUserId(userId);
@@ -149,8 +153,11 @@ public class AuthController {
     public ResponseEntity<?> getMe(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null) return ResponseEntity.status(401).build();
 
+        User user = userRepository.findByEmail(userDetails.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+
         Map<String, Object> res = new HashMap<>();
-        res.put("username", userDetails.getUsername());
+        res.put("username", user.getUsername());
         res.put("roles", userDetails.getAuthorities()
                 .stream().map(GrantedAuthority::getAuthority).toList());
         return ResponseEntity.ok(res);

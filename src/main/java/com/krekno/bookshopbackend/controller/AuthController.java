@@ -17,11 +17,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -139,5 +143,16 @@ public class AuthController {
         return ResponseEntity.ok()
                 .headers(headers)
                 .body("You've been signed out!");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getMe(@AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) return ResponseEntity.status(401).build();
+
+        Map<String, Object> res = new HashMap<>();
+        res.put("username", userDetails.getUsername());
+        res.put("roles", userDetails.getAuthorities()
+                .stream().map(GrantedAuthority::getAuthority).toList());
+        return ResponseEntity.ok(res);
     }
 }

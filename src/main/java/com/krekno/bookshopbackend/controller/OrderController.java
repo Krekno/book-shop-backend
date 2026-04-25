@@ -1,7 +1,6 @@
 package com.krekno.bookshopbackend.controller;
 
 import com.krekno.bookshopbackend.entity.*;
-import com.krekno.bookshopbackend.enums.Role;
 import com.krekno.bookshopbackend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,7 +22,6 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final CartRepository cartRepository;
-    private final BookRepository bookRepository;
 
     @PostMapping("/place")
     public ResponseEntity<?> placeOrder(@AuthenticationPrincipal UserDetails userDetails) {
@@ -94,8 +91,8 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-    @PatchMapping("/admin/approve")
-    public ResponseEntity<?> approveOrder(@RequestParam Long id) {
+    @PatchMapping("/admin/approve{id}")
+    public ResponseEntity<?> approveOrder(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("order not found"));
@@ -105,8 +102,8 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/admin/cancel")
-    public ResponseEntity<?> cancelOrder(@RequestParam Long id) {
+    @PatchMapping("/admin/cancel{id}")
+    public ResponseEntity<?> cancelOrder(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("order not found"));

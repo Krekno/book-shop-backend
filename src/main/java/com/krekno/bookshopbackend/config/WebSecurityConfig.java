@@ -59,6 +59,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/books/all/admin").hasAuthority(Role.ROLE_ADMIN.name())
                                 .requestMatchers("/api/books/**").permitAll()
                                 .requestMatchers("/api/auth/update").authenticated()
+                                .requestMatchers("/api/auth/me").authenticated()
                                 .requestMatchers("/api/auth/**").permitAll()
                                 .requestMatchers("/api/cart/**").authenticated()
                                 .requestMatchers("/api/order/**").authenticated()

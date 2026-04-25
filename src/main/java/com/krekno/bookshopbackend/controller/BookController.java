@@ -34,7 +34,7 @@ public class BookController {
     }
 
     @PostMapping("/saveBook")
-    public Book saveBook(BookRequestDto dto) {
+    public Book saveBook(@RequestBody BookRequestDto dto) {
         Book book = new Book();
         book.setName(dto.getName());
         book.setAuthor(dto.getAuthor());

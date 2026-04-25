@@ -1,18 +1,11 @@
-package com.krekno.bookshopbackend.entity;
+package com.krekno.bookshopbackend.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
-
 import java.util.Date;
 
-@Entity
 @Data
-@Table(name = "books")
-public class Book {
+public class BookRequestDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String name;
     private String author;
     private String genre;

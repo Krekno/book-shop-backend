@@ -1,5 +1,6 @@
 package com.krekno.bookshopbackend.controller;
 
+import com.krekno.bookshopbackend.dto.BookRequestDto;
 import com.krekno.bookshopbackend.entity.Book;
 import com.krekno.bookshopbackend.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,24 @@ public class BookController {
 
         List<Book> books = bookRepository.findAll();
         return ResponseEntity.ok(books);
+    }
+
+    @PostMapping("/saveBook")
+    public Book saveBook(BookRequestDto dto) {
+        Book book = new Book();
+        book.setName(dto.getName());
+        book.setAuthor(dto.getAuthor());
+        book.setGenre(dto.getGenre());
+        book.setDescription(dto.getDescription());
+        book.setImage(dto.getImage());
+        book.setIsbn(dto.getIsbn());
+        book.setPublisher(dto.getPublisher());
+        book.setLanguage(dto.getLanguage());
+        book.setYear(dto.getYear());
+        book.setPages(dto.getPages());
+        book.setPrice(dto.getPrice());
+        book.setStock(dto.getStock());
+        return bookRepository.save(book);
     }
 
     @PatchMapping("/update/{id}")

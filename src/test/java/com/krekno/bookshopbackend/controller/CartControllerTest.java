@@ -1,6 +1,5 @@
 package com.krekno.bookshopbackend.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.krekno.bookshopbackend.config.WebSecurityConfig;
 import com.krekno.bookshopbackend.entity.CartItem;
 import com.krekno.bookshopbackend.entity.Book;
@@ -34,9 +33,6 @@ public class CartControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @MockitoBean
     private CartService cartService;

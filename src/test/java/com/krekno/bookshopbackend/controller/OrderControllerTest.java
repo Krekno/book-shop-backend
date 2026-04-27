@@ -1,14 +1,15 @@
 package com.krekno.bookshopbackend.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.krekno.bookshopbackend.config.WebSecurityConfig;
 import com.krekno.bookshopbackend.entity.Order;
 import com.krekno.bookshopbackend.enums.OrderStatus;
 import com.krekno.bookshopbackend.service.JwtUtils;
 import com.krekno.bookshopbackend.service.OrderService;
 import com.krekno.bookshopbackend.service.UserDetailsServiceImpl;
+
+import lombok.RequiredArgsConstructor;
+
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.context.annotation.Import;
@@ -17,8 +18,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -26,13 +25,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(OrderController.class)
 @Import(WebSecurityConfig.class)
+@RequiredArgsConstructor
 public class OrderControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final MockMvc mockMvc;
 
     @MockitoBean
     private OrderService orderService;

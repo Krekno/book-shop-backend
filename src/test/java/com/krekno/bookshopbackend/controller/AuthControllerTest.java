@@ -6,7 +6,6 @@ import com.krekno.bookshopbackend.dto.LoginRequest;
 import com.krekno.bookshopbackend.dto.SignupRequest;
 import com.krekno.bookshopbackend.service.AuthService;
 import com.krekno.bookshopbackend.service.JwtUtils;
-import com.krekno.bookshopbackend.service.UserDetailsImpl;
 import com.krekno.bookshopbackend.service.UserDetailsServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;

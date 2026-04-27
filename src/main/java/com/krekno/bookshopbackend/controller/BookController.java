@@ -2,9 +2,8 @@ package com.krekno.bookshopbackend.controller;
 
 import com.krekno.bookshopbackend.dto.BookRequestDto;
 import com.krekno.bookshopbackend.entity.Book;
-import com.krekno.bookshopbackend.repository.BookRepository;
+import com.krekno.bookshopbackend.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,96 +14,35 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllBooks() {
-
-        List<Book> books = bookRepository.findAll();
-        books = books.stream().filter(book -> book.getStock() > 0).toList();
-
+        List<Book> books = bookService.getAllInStockBooks();
         return ResponseEntity.ok(books);
     }
 
     @GetMapping("/all/admin")
     public ResponseEntity<?> getAllBooksAdmin() {
-
-        List<Book> books = bookRepository.findAll();
+        List<Book> books = bookService.getAllBooks();
         return ResponseEntity.ok(books);
     }
 
     @PostMapping("/saveBook")
-    public Book saveBook(@RequestBody BookRequestDto dto) {
-        Book book = new Book();
-        book.setName(dto.getName());
-        book.setAuthor(dto.getAuthor());
-        book.setGenre(dto.getGenre());
-        book.setDescription(dto.getDescription());
-        book.setImage(dto.getImage());
-        book.setIsbn(dto.getIsbn());
-        book.setPublisher(dto.getPublisher());
-        book.setLanguage(dto.getLanguage());
-        book.setYear(dto.getYear());
-        book.setPages(dto.getPages());
-        book.setPrice(dto.getPrice());
-        book.setStock(dto.getStock());
-        return bookRepository.save(book);
+    public ResponseEntity<Book> saveBook(@RequestBody BookRequestDto dto) {
+        Book book = bookService.saveBook(dto);
+        return ResponseEntity.ok(book);
     }
 
     @PatchMapping("/update/{id}")
     public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody BookRequestDto updatedBook) {
-
-        return bookRepository.findById(id)
-                .map(book -> {
-
-                    if (updatedBook.getName() != null)
-                        book.setName(updatedBook.getName());
-
-                    if (updatedBook.getAuthor() != null)
-                        book.setAuthor(updatedBook.getAuthor());
-
-                    if (updatedBook.getGenre() != null)
-                        book.setGenre(updatedBook.getGenre());
-
-                    if (updatedBook.getDescription() != null)
-                        book.setDescription(updatedBook.getDescription());
-
-                    if (updatedBook.getImage() != null)
-                        book.setImage(updatedBook.getImage());
-
-                    if (updatedBook.getIsbn() != null)
-                        book.setIsbn(updatedBook.getIsbn());
-
-                    if (updatedBook.getPublisher() != null)
-                        book.setPublisher(updatedBook.getPublisher());
-
-                    if (updatedBook.getLanguage() != null)
-                        book.setLanguage(updatedBook.getLanguage());
-
-                    if (updatedBook.getYear() != null)
-                        book.setYear(updatedBook.getYear());
-
-                    if (updatedBook.getPages() > 0)
-                        book.setPages(updatedBook.getPages());
-
-                    if (updatedBook.getPrice() > 0)
-                        book.setPrice(updatedBook.getPrice());
-
-                    if (updatedBook.getStock() >= 0)
-                        book.setStock(updatedBook.getStock());
-
-                    bookRepository.save(book);
-
-                    return ResponseEntity.ok("Book updated successfully!");
-                })
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Book not found!"));
+        Book book = bookService.updateBook(id, updatedBook);
+        return ResponseEntity.ok("Book updated successfully!");
     }
 
     @PutMapping("/delete/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable Long id) {
-
-        bookRepository.deleteById(id);
+        bookService.deleteBook(id);
         return ResponseEntity.ok("Book deleted successfully!");
     }
 }

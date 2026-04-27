@@ -36,9 +36,9 @@ public class JwtUtils {
         return ResponseCookie.from(jwtCookie, jwt)
                 .path("/")
                 .maxAge(jwtExpirationMs / 1000) // seconds
-                .httpOnly(true)
+                //.httpOnly(true)
                 //.secure(true) // Set to true in production (HTTPS)
-                .sameSite("Strict")
+                //.sameSite("Strict")
                 .build();
     }
 
@@ -46,9 +46,9 @@ public class JwtUtils {
         return ResponseCookie.from(jwtRefreshCookie, refreshToken)
                 .path("/api/auth/refresh")
                 .maxAge(7 * 24 * 60 * 60) // 7 days
-                .httpOnly(true)
+                //.httpOnly(true)
                 //.secure(true)
-                .sameSite("Strict")
+                //.sameSite("Strict")
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package com.krekno.bookshopbackend.entity;
 
+import com.krekno.bookshopbackend.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,7 +24,8 @@ public class Order {
 
     private LocalDateTime date;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     private float price;
 }

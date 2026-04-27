@@ -52,6 +52,10 @@ public class UserDetailsImpl implements UserDetails {
         return id;
     }
 
+    public String getDisplayName() {
+        return username;
+    }
+
     public String getEmail() {
         return email;
     }

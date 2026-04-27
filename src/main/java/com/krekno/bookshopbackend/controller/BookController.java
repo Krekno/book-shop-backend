@@ -3,6 +3,7 @@ package com.krekno.bookshopbackend.controller;
 import com.krekno.bookshopbackend.dto.BookRequestDto;
 import com.krekno.bookshopbackend.entity.Book;
 import com.krekno.bookshopbackend.service.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,18 +30,18 @@ public class BookController {
     }
 
     @PostMapping("/saveBook")
-    public ResponseEntity<Book> saveBook(@RequestBody BookRequestDto dto) {
+    public ResponseEntity<Book> saveBook(@Valid @RequestBody BookRequestDto dto) {
         Book book = bookService.saveBook(dto);
         return ResponseEntity.ok(book);
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<?> updateBook(@PathVariable Long id, @RequestBody BookRequestDto updatedBook) {
+    public ResponseEntity<?> updateBook(@PathVariable Long id, @Valid @RequestBody BookRequestDto updatedBook) {
         Book book = bookService.updateBook(id, updatedBook);
         return ResponseEntity.ok("Book updated successfully!");
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.ok("Book deleted successfully!");

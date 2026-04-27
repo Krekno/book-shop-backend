@@ -5,6 +5,7 @@ import com.krekno.bookshopbackend.dto.SignupRequest;
 import com.krekno.bookshopbackend.service.AuthService;
 import com.krekno.bookshopbackend.service.UserDetailsImpl;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
         authService.registerUser(signupRequest);
         return ResponseEntity.ok("User registered successfully!");
     }
@@ -36,7 +37,7 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         HttpHeaders headers = authService.authenticateUser(loginRequest);
         return ResponseEntity.ok()
                 .headers(headers)

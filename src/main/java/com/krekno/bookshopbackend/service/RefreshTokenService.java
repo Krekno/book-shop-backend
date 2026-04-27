@@ -3,7 +3,6 @@ package com.krekno.bookshopbackend.service;
 import com.krekno.bookshopbackend.entity.RefreshToken;
 import com.krekno.bookshopbackend.repository.RefreshTokenRepository;
 import com.krekno.bookshopbackend.repository.UserRepository;
-import io.micrometer.observation.ObservationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

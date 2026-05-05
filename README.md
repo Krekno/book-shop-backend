@@ -80,11 +80,7 @@ To run the test suite:
 
 To view a detailed HTML test report, you can navigate to `build/reports/tests/test/index.html` after the test task completes.
 
-## API Documentation
-
-A complete, detailed list of all available REST endpoints, including expected inputs and outputs, can be found in the [endpoints.md](endpoints.md) file located in the root of this repository.
-
-### Quick Overview
+### API Quick Overview
 *   `/api/auth/**` - Signup, Signin, Refresh, Logout
 *   `/api/books/**` - View books, Add/Edit/Delete books (Admin)
 *   `/api/cart/**` - Manage shopping cart
